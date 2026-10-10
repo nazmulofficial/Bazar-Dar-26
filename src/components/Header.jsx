@@ -212,7 +212,7 @@ const HeaderContent = () => {
 
           <div>
             <h1 className="text-xl font-bold text-gray-900 sm:text-2xl">
-              বাজার দর
+              বাজার <span className="text-green-600">দর</span>
             </h1>
 
             <p className="mt-1 text-xs text-gray-500">
