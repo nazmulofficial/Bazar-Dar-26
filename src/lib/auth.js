@@ -2,10 +2,33 @@ import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
 
-const client = new MongoClient(process.env.MONGODB_URL);
+// Environment variables
+const mongodbUrl = process.env.MONGODB_URL;
+const secret = process.env.BETTER_AUTH_SECRET;
+const baseURL = process.env.BETTER_AUTH_URL;
+
+// Validate required environment variables
+if (!mongodbUrl) {
+  throw new Error("MONGODB_URL is missing.");
+}
+
+if (!secret) {
+  throw new Error("BETTER_AUTH_SECRET is missing.");
+}
+
+if (!baseURL) {
+  throw new Error("BETTER_AUTH_URL is missing.");
+}
+
+// MongoDB connection
+const client = new MongoClient(mongodbUrl);
 const db = client.db("bazar-dar");
 
+// Better Auth configuration
 export const auth = betterAuth({
+  baseURL,
+  secret,
+
   database: mongodbAdapter(db, {
     client,
   }),
